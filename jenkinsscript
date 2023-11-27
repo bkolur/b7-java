@@ -12,7 +12,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 script {
-                    sh 'docker build -f Dockerfile -t bkolur:1.0 .'
+                    sh 'docker build -t newimage:1.0 .'
                 }
             }
         }
@@ -21,7 +21,7 @@ steps{
 script{
      withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
            sh 'docker login --username bkolur -p ${dockerhub}'
-            sh 'docker push bkolur/bkolur:1.0'
+            sh 'docker push bkolur/newimage:1.0'
 }
 
     }
