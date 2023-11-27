@@ -12,7 +12,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 script {
-                    sh 'docker build -t bkolur:1.0 .'
+                    sh 'docker build -f Dockerfile -t bkolur:1.0 .'
                 }
             }
         }
