@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('build') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/bkolur/b7-java.git']]])
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('build docker image') {
+            steps {
+                script {
+                    sh 'docker build -t bkolur:1.0 .'
+                }
+            }
+        }
+stage('push image to Hub'){
+steps{
+script{
+     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+           sh 'docker login --username bkolur -p ${dockerhub}'
+            sh 'docker push bkolur/bkolur:1.0'
+}
+
+    }
+}
+}
+
+ }
+}
