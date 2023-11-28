@@ -19,8 +19,8 @@ pipeline {
 stage('push image to Hub'){
 steps{
 script{
-     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-           sh 'docker login --username bkolur -p ${dockerhub}'
+     withCredentials([string(credentialsId: 'docker', variable: 'docker')]) {
+           sh 'docker login --username bkolur -p ${docker}'
             sh 'docker push bkolur/newimage:1.0'
 }
 
